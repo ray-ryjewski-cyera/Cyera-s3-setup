@@ -21,16 +21,11 @@ provider "aws" {
   default_tags {
     tags = {
       Environment = "Sandbox"
-      Owner = "ray.ryjewski"
-      Team = "SE"
+      Owner = "daniel.chan"
+      Team = "CSE"
       Project = "Internal"
     }
   }
-
-  # Set Environment Variables in your terminal for Auth
-    # export AWS_ACCESS_KEY_ID="anaccesskey"
-    # export AWS_SECRET_ACCESS_KEY="asecretkey"
-    # export AWS_SESSION_TOKEN="aSessionToken"
 }
 
 # Module Doc - https://registry.terraform.io/modules/hashicorp/dir/template/latest
@@ -45,9 +40,16 @@ module "sample_files" {
 ## S3 Bucket Setup
 ##################
 
+# random string resource
+resource "random_string" "random_gen" {
+  length = 8
+  special  = false
+  upper = false
+}
+
 # Create the S3 Bucket
 resource "aws_s3_bucket" "private_bucket" {
-    bucket = "rkr-priviate-bucket"
+    bucket = "djc-test-bucket-${random_string.random_gen.result}"
     # acl = "private"
 }
 
