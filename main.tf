@@ -21,8 +21,8 @@ provider "aws" {
   default_tags {
     tags = {
       Environment = "Sandbox"
-      Owner = "daniel.chan"
-      Team = "CSE"
+      Owner = var.name
+      Team = var.team
       Project = "Internal"
     }
   }
@@ -49,7 +49,7 @@ resource "random_string" "random_gen" {
 
 # Create the S3 Bucket
 resource "aws_s3_bucket" "private_bucket" {
-    bucket = "djc-test-bucket-${random_string.random_gen.result}"
+    bucket = "${var.bucket_name_prefix}-${random_string.random_gen.result}"
     # acl = "private"
 }
 
